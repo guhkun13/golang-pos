@@ -1,11 +1,15 @@
 package user
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 func SetUserRoutes(router fiber.Router) {
-	userRouter := router.Group("user")
+	log.Println("SetUserRoutes")
 
-	userRouter.Get("/", GetUsers)
+	route := router.Group("user")
+
+	route.Get("/", GetUsers)
 }
