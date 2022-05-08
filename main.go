@@ -8,7 +8,7 @@ import (
 
 	"github.com/guhkun13/go-pos/apps/routes"
 	"github.com/guhkun13/go-pos/pkg/database"
-	"github.com/guhkun13/go-pos/pkg/utils"
+	// "github.com/guhkun13/go-pos/pkg/utils"
 )
 
 func main() {
@@ -27,5 +27,7 @@ func main() {
 	routes.SetupRoutes(app)
 
 	// start server
-	utils.StartServer(app)
+	// utils.StartServer(app)
+	log.Fatal(app.Listen(":5000"))
+	
 }
