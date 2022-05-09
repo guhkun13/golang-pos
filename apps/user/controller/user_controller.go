@@ -40,25 +40,22 @@ func CreateUser(c *fiber.Ctx) error {
 	c.BodyParser(&user)
 	// validate input first
 	errors := utils.ValidateStruct(*user, utils.UserModel)
-
+	
 	if errors != nil {
-		return c.JSON(errors)
-		
+		return c.JSON(errors)		
 	}
-
+	
 	// try to parse input to user instance
 	if err := c.BodyParser(&user); err != nil {
 		log.Println("err at body parser", err)
-		// ret := utils.ReturnError(utils.ReviewInput, err)
+		ret := utils.ReturnError(utils.ReviewInput, err)
 		
-		// return c.Status(500).JSON(ret)
+		return c.Status(500).JSON(ret)
 	}
-	
 	
 	// generate new ID
 	user.ID = uuid.New()
-	
-	log.Println("user to be created: ", user)
+	// log.Println("user to be created: ", user)
 	
 	// try to save to db
 	if err := conn.Create(&user).Error; err != nil {
@@ -67,7 +64,30 @@ func CreateUser(c *fiber.Ctx) error {
 		log.Println("err save to db: ", ret)
 		return c.Status(500).JSON(ret)
 	}
+	ret := utils.ReturnOK(utils.OK, user)
 	
+	return c.Status(200).JSON(ret)
+}
+
+func GetUser(c *fiber.Ctx) error {
+	// establish db conn
+	conn := database.DB
+	
+	// get id
+	id := c.Params("id")
+	
+	// prepare var 
+	var user user_model.User
+	
+	// try get user
+	if err := conn.Find(&user, "id = ?", id).Error; err != nil {
+		log.Println("error find data: ", id)
+		ret := utils.ReturnError(utils.DataNotFound, nil)
+		
+		return c.Status(404).JSON(ret)
+	}
+	
+	// ok get user
 	ret := utils.ReturnOK(utils.OK, user)
 	
 	return c.Status(200).JSON(ret)

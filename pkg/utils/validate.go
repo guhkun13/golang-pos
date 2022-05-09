@@ -24,7 +24,7 @@ type ErrorResponse struct {
 func ValidateStruct(dataStruct interface{}, model string) []*ErrorResponse {
 	var errors []*ErrorResponse
 	
-	log.Println("ValidateStruct 1: ", dataStruct)
+	// log.Println("ValidateStruct 1: ", dataStruct)
 	
 	if !IsValidModel(model) {
 		element := ErrorResponse{
@@ -57,7 +57,8 @@ func ValidateStruct(dataStruct interface{}, model string) []*ErrorResponse {
 }
 
 func ConvertIface2Struct(data interface{}, model string) interface{}{
-	log.Println("GetModel", data, model)
+	// log.Println("GetModel", data, model)
+
 	switch model {
 	case UserModel:
 		return data.(user_model.User)

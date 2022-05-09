@@ -15,4 +15,5 @@ func SetupUserRoutes(router fiber.Router) {
 
 	rg.Get("/", user_controller.GetUsers)
 	rg.Post("/", user_controller.CreateUser)
+	rg.Get("/:id", user_controller.GetUser)
 }
