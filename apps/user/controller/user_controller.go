@@ -92,3 +92,43 @@ func GetUser(c *fiber.Ctx) error {
 	
 	return c.Status(200).JSON(ret)
 }
+
+func DeleteUser(c *fiber.Ctx) error {
+	// establish db conn
+	conn := database.DB
+	
+	// get id
+	id := c.Params("id")
+	
+	// prepare var 
+	var user user_model.User
+	
+	// try delete user
+	if err := conn.Find(&user, "id = ?", id).Error; err != nil {
+		log.Println("error find data: ", id)
+		ret := utils.ReturnError(utils.DataNotFound, err)
+		
+		return c.Status(404).JSON(ret)
+	}
+
+	if user.ID == uuid.Nil {
+		log.Println("user ID is nil", user.ID)
+
+		ret := utils.ReturnError(utils.DataNotFound, nil)
+		
+		return c.Status(404).JSON(ret)
+	}
+	
+	// get user berhasil, try to delete it 
+	if err := conn.Delete(&user, "id = ?", id); err != nil {
+		log.Println("gagal delete")
+		ret := utils.ReturnError("Failed delete data", err)
+
+		return c.Status(500).JSON(ret)
+	}
+
+	// ok get user
+	ret := utils.ReturnOK(utils.OK, user)
+	
+	return c.Status(200).JSON(ret)
+}
