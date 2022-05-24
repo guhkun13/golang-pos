@@ -120,7 +120,7 @@ func DeleteUser(c *fiber.Ctx) error {
 	}
 	
 	// get user berhasil, try to delete it 
-	if err := conn.Delete(&user, "id = ?", id); err != nil {
+	if err := conn.Delete(&user, "id = ?", id).Error; err != nil {
 		log.Println("gagal delete")
 		ret := internal.ReturnError("Failed delete data", err)
 
