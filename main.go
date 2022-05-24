@@ -6,9 +6,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/qinains/fastergoding"
 
-	"github.com/guhkun13/go-pos/apps/routes"
-	"github.com/guhkun13/go-pos/pkg/database"
-	// "github.com/guhkun13/go-pos/pkg/utils"
+	"github.com/guhkun13/go-pos/database"
+	"github.com/guhkun13/go-pos/routes"
 )
 
 func main() {
@@ -21,13 +20,14 @@ func main() {
 	app := fiber.New()
 	
 	// connect database
-	database.PostgresConnection()
+	database.ConnectDbSQL()
 
 	// setup routes
 	routes.SetupRoutes(app)
 
 	// start server
 	// utils.StartServer(app)
-	log.Fatal(app.Listen(":5000"))
+	port := ":5000"
+	log.Fatal(app.Listen(port))
 	
 }
