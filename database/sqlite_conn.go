@@ -17,7 +17,7 @@ func ConnectDbSQL() {
 	var err error
 	// import "gorm.io/driver/sqlite"
 	// ref: https://gorm.io/docs/connecting_to_the_database.html#SQLite
-	dbName := "pos.sqlite"
+	dbName := "gopos.db"
 	DbSql, err = gorm.Open(sqlite.Open(dbName), &gorm.Config{})
 	
 	if err != nil {
