@@ -16,6 +16,8 @@ import (
 	"github.com/guhkun13/go-pos/models"
 )
 
+const SecretKey = "ThisIsMySecretKey"
+
 type RegisterUserDto struct {
 	Name 	string		`json:"name" validate:"required"`
 	Email string
@@ -27,8 +29,6 @@ type UserLoginDto struct {
 	Email string			
 	Password string
 }
-
-const SecretKey = "ThisIsMySecretKey"
 
 func Register(c *fiber.Ctx) error {
 	var data RegisterUserDto

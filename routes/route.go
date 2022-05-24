@@ -8,10 +8,9 @@ import (
 func setProtectedRoute(app *fiber.App){
 	// JWT Middleware
 	app.Use(jwtware.New(jwtware.Config{
-		SigningKey: []byte("secret"),
+		SigningKey: []byte(SecretKey),
 	}))
 }
-
 
 func SetupRoutes(app *fiber.App) {
 	app.Get("/", func (c *fiber.Ctx) error {
