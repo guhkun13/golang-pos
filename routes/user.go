@@ -12,7 +12,7 @@ import (
 )
 
 func GetUsers(c *fiber.Ctx) error {
-	conn := database.Database.Db
+	conn := database.DbSql
 	var users []models.User
 	
 	conn.Find(&users)
@@ -35,14 +35,14 @@ func CreateUser(c *fiber.Ctx) error {
 	conn := database.DbSql
 	
 	// init user instance
-	user := new(models.User)
+	var user models.User
 	
 	c.BodyParser(&user)
 	// validate input first
 	errors := internal.ValidateInput(&user)
 	
 	if errors != nil {
-		return c.JSON(errors)		
+		return c.JSON(&errors)		
 	}
 	
 	// try to parse input to user instance

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/qinains/fastergoding"
 
 	"github.com/guhkun13/go-pos/database"
@@ -18,6 +19,8 @@ func main() {
 
 	// create new fiber app
 	app := fiber.New()
+
+	app.Use(logger.New())
 	
 	// connect database
 	database.ConnectDbSQL()

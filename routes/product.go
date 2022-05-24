@@ -12,7 +12,7 @@ import (
 
 func GetProducts(c *fiber.Ctx) error {
 	log.Println("GetProducts")
-	conn := database.Database.Db
+	conn := database.DbSql
 
 	var products []models.Product
 
